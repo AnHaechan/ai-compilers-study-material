@@ -27,7 +27,7 @@ This repository is designed as a focused resource for individuals beginning work
   - Hence, it is crucial to optimize its performance to the last bit via runtime strategies and custom attention kernels.
   - [vLLM](https://github.com/vllm-project/vllm) runtime with attention kernels written in [CUTLASS](https://docs.nvidia.com/cutlass/index.html) or [Triton](https://github.com/triton-lang/triton) is a popular choice.
   - At the state of 2025, [FlashInfer](https://github.com/flashinfer-ai/flashinfer) seems to be the SoTA in terms of programming attention kernels. It provides programming interface for various attention mechanisms, generating efficient implementation aware of diverse KV cache access patterns and hardware features.
-- Nonetheless, AI compilers remain to be an important topic. 
+- The details have been changing, but AI compilers remain to be an important topic. 
   - Graph compilers can accelerate the rest of the model[[example](https://blog.vllm.ai/2025/08/20/torch-compile.html)], used together with custom attention kernels.
   - Kernel programming, especially for recent GPU architectures, remains to be complex and ad-hoc[[paper](https://arxiv.org/html/2504.07004v1)].
   - AI compilers can support faster prototyping for different attention algorithms, or even non-Transformer models [[mamba](https://arxiv.org/pdf/2312.00752)].
@@ -58,7 +58,10 @@ This repository is designed as a focused resource for individuals beginning work
 - [Triton](https://github.com/triton-lang/triton)
   - For recent Hopper/Blackwell GPUs, Triton struggles to achieve optimal performance due to the increased complexity of GPU.
   - To mitigate this, [Gluon](https://github.com/triton-lang/triton/blob/main/python/tutorials/gluon/01-intro.py) is being developed within the Triton ecosystem, which exposes more lower-level controls akin to CUTLASS.
+ 
+#### Attention template languages
 - [FlashInfer](https://github.com/flashinfer-ai/flashinfer)
+- [FlexAttention](https://pytorch.org/blog/flexattention/)
 
 ### Hands-on tutorials
 - TVM
