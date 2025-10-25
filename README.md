@@ -24,9 +24,9 @@ This repository is designed as a focused resource for individuals beginning work
   - [TVM](https://github.com/apache/tvm) and [XLA](https://github.com/openxla/xla) were the most popular compiler frameworks.
 - After the domination of LLMs, the focus has shifted to **LLM runtimes + attention kernels**.
   - LLMs, or autoregressive Transformers with self-attention, has become the core workload.
-  - Hence, it is crucial to optimize its performance to the last bit via runtime strategies and custom attention kernels.
-  - [vLLM](https://github.com/vllm-project/vllm) runtime with attention kernels written in [CUTLASS](https://docs.nvidia.com/cutlass/index.html) or [Triton](https://github.com/triton-lang/triton) is a popular choice.
-  - At the state of 2025, [FlashInfer](https://github.com/flashinfer-ai/flashinfer) seems to be the SoTA in terms of programming attention kernels. It provides programming interface for various attention mechanisms, generating efficient implementation aware of diverse KV cache access patterns and hardware features.
+  - Hence, it is crucial to optimize its performance to the last bit via runtime strategies and custom kernels.
+  - [vLLM](https://github.com/vllm-project/vllm) runtime with kernels written in template-based languages, such as [CUTLASS](https://docs.nvidia.com/cutlass/index.html) or [Triton](https://github.com/triton-lang/triton), is a popular choice.
+  - [FlashInfer](https://github.com/flashinfer-ai/flashinfer) even provides template programming specifically for attentions. They generate efficient implementation aware of diverse KV cache access patterns and hardware features.
 - The details have been changing, but AI compilers remain to be an important topic. 
   - Graph compilers can accelerate the rest of the model[[example](https://blog.vllm.ai/2025/08/20/torch-compile.html)], used together with custom attention kernels.
   - Kernel programming, especially for recent GPU architectures, remains to be complex and ad-hoc[[paper](https://arxiv.org/html/2504.07004v1)].
