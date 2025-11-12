@@ -60,7 +60,7 @@ This repository is designed as a focused resource for individuals beginning work
     - For Hopper/Blackwell GPUs, Triton struggles to achieve optimal performance due to the increased complexity of GPU.
     - To mitigate this, Gluon is being developed within the Triton ecosystem, which exposes more lower-level controls akin to CUTLASS.
   - [Helion](https://pytorch.org/blog/helion/)
-    - Helion provides the middle ground between TorchInductor and Triton, offering flexbilty to program kernels with templates, but hiding details of Triton
+    - Helion, developed by PyTorch team, provides the middle ground between TorchInductor and Triton, offering flexbilty to program kernels with templates but hiding details of Triton
  
 #### Attention template languages
 - [FlashInfer](https://github.com/flashinfer-ai/flashinfer)
