@@ -54,7 +54,7 @@ This repository is designed as a focused resource for individuals beginning work
 - [TVM](https://github.com/apache/tvm)
 - [XLA](https://github.com/openxla/xla)
 - [TorchInductor](https://github.com/pytorch/pytorch/tree/main/torch/_inductor)
-  - TorchInductor feels like a "modern" version of traditional AI compilers, in the sense that it utilizes Triton for the part of operator compilation and has been getting some boost by the PyTorch team.
+  - TorchInductor feels like a "modern" version of traditional AI compilers, in the sense that it fits the PyTorch ecosystem and utilizes Triton for the part of operator compilation.
   - For example, [vLLMs use TorchInductor to compile non-attention part of the LLMs](https://blog.vllm.ai/2025/08/20/torch-compile.html).
 
 #### LLM runtimes
