@@ -21,14 +21,14 @@ This repository is designed as a focused resource for individuals beginning work
 - In the pre-LLM era, AI compilers consist of **graph optimizers + operator libraries OR compilers**. 
   - *Graph optimizers* perform various computational graph-level rewrites such as operator fusion, redundancy elimination.
   - Each tensor operator in the graph is implemented as an accelerator kernel, e.g., CUDA kernels.
-     - *Operator libraries*: programming directly for peak performance 
-     - *Operator compilers*: automatically generating for wide coverage with moderate performance 
+     - *Operator libraries*: programming kernels manually for peak performance 
+     - *Operator compilers*: automatically generating kernels for wide coverage with moderate performance 
   - [TVM](https://github.com/apache/tvm) and [XLA](https://github.com/openxla/xla) were the popular end-to-end compiler frameworks.
 - After the domination of LLMs, the focus has shifted to **LLM runtimes + template compilers**.
   - For LLMs, AI compilers should maximize the performance of matmul/attention under runtime strategies.
     - DNN architectures have converged into Transformers, of which the core workloads are dense matmul and attention.
     - LLMs inferences are not merely a single forward pass; rather multi-step decoding, which induced runtimes optimizations such as KV caching and iterative batching.
-  - Traditional AI compilers, targetted for covering different architectures under simple runtime, fall short on delivering the performance; While direct kernel programming requires too much effort.
+  - Traditional AI compilers, targetted covering different models and simple runtime, fall short on delivering the performance; While direct kernel programming requires too much effort.
   - *Template-based languages* are the middle ground: Users write templates for an operator kernel to give hints and the rest are dealt with their compiler.
     - [CUTLASS](https://docs.nvidia.com/cutlass/index.html) and [Triton](https://github.com/triton-lang/triton) are the popular choices.
     - [FlashInfer](https://github.com/flashinfer-ai/flashinfer) and [FlexAttention](https://pytorch.org/blog/flexattention/) even provide templates specifically for attention.
