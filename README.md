@@ -70,7 +70,7 @@ This repository is designed as a focused resource for individuals beginning work
     - Gluon is being developed within the Triton ecosystem which exposes more lower-level controls akin to CUTLASS.
   - [Helion](https://pytorch.org/blog/helion/)
     - Helion, developed by the PyTorch team, provides the middle ground between TorchInductor and Triton, offering flexbilty to program kernels with templates but hiding details of Triton.
-- [TileLang](https://github.com/tile-ai/tilelang) is another template-based language 
+- [TileLang](https://github.com/tile-ai/tilelang) is another template-based language built on top of TVM ecoysystem.
  
 #### Attention template compilers
 - [FlashInfer](https://github.com/flashinfer-ai/flashinfer)
