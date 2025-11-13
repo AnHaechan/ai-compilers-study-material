@@ -75,6 +75,7 @@ This repository is designed as a focused resource for individuals beginning work
 #### Attention template compilers
 - [FlashInfer](https://github.com/flashinfer-ai/flashinfer)
 - [FlexAttention](https://pytorch.org/blog/flexattention/)
+  - [FlashLight](https://arxiv.org/pdf/2511.02043) has been released very recently (Nov 07, 2025), which surpasses FlexAttention's performance with automatic compilation, being part of PyTorch workflow as the TorchInductor extension.
 
 ### Hands-on tutorials
 - TVM
