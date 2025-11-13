@@ -5,7 +5,7 @@ This repository is designed as a focused resource for individuals beginning work
 
 ​By AI compilers, I specifically refer to the software stack responsible for translating and optimizing DNN models into efficient assembly code for various accelerators, including GPUs and NPUs.
 
-​I have curated the most valuable resources I've encountered to date to provide a solid starting point.
+​I have curated valuable resources I've encountered to date to provide a solid starting point.
 
 ### Prerequisites
 - Basic understanding of DNN and Transformer architectures.
@@ -18,19 +18,25 @@ This repository is designed as a focused resource for individuals beginning work
 - [Introduction to AI compilers](https://docs.google.com/presentation/d/1RZdV3Z-Q1NEbpU1-qk9C97yE1QvwNLJ9Gc7JLaFLZCw/edit?slide=id.p#slide=id.p)
 
 ### State of AI compilers
-- In the pre-LLM era, AI compilers consist of **graph compilers + kernel libraries / compilers**. 
-  - Graph compilers perform various computational graph-level optimizations.
-  - Kernels for individual operators can be crafted by direct programming (*kernel libraries*) or automatic generation (*kernel compilers*).
-  - [TVM](https://github.com/apache/tvm) and [XLA](https://github.com/openxla/xla) were the most popular compiler frameworks.
-- After the domination of LLMs, the focus has shifted to **LLM runtimes + attention kernels**.
-  - LLMs, or autoregressive Transformers with self-attention, has become the core workload.
-  - Hence, it is crucial to optimize its performance to the last bit via runtime strategies and custom kernels.
-  - [vLLM](https://github.com/vllm-project/vllm) runtime with kernels written in template-based languages, such as [CUTLASS](https://docs.nvidia.com/cutlass/index.html) or [Triton](https://github.com/triton-lang/triton), is a popular choice.
-  - [FlashInfer](https://github.com/flashinfer-ai/flashinfer) and [FlexAttention](https://pytorch.org/blog/flexattention/) even provides template programming specifically for attentions. They generate kernels aware of KV cache access patterns and hardware features.
-- The details have been changing, but AI compilers remain to be an important topic. 
-  - Graph compilers can accelerate the rest of the model[[example](https://blog.vllm.ai/2025/08/20/torch-compile.html)], used together with custom attention kernels.
-  - Kernel programming, especially for recent GPU architectures, remains to be complex and ad-hoc[[paper](https://arxiv.org/html/2504.07004v1)].
-  - AI compilers can support faster prototyping for different attention algorithms, or even non-Transformer models [[mamba](https://arxiv.org/pdf/2312.00752)].
+- In the pre-LLM era, AI compilers consist of **graph optimizers + operator libraries OR compilers**. 
+  - *Graph optimizers* perform various computational graph-level rewrites such as operator fusion, redundancy elimination.
+  - Each tensor operator in the graph is implemented as an accelerator kernel, e.g., CUDA kernels.
+     - *Operator libraries*: programming directly for peak performance 
+     - *Operator compilers*: automatically generating for wide coverage with moderate performance 
+  - [TVM](https://github.com/apache/tvm) and [XLA](https://github.com/openxla/xla) were the popular end-to-end compiler frameworks.
+- After the domination of LLMs, the focus has shifted to **LLM runtimes + template compilers**.
+  - For LLMs, AI compilers should maximize the performance of matmul/attention under runtime strategies.
+    - DNN architectures have converged into Transformers, of which the core workloads are dense matmul and attention.
+    - LLMs inferences are not merely a single forward pass; rather multi-step decoding, which induced runtimes optimizations such as KV caching and iterative batching.
+  - Traditional AI compilers, targetted for covering different architectures under simple runtime, fall short on delivering the performance; While direct kernel programming requires too much effort.
+  - *Template-based languages* are the middle ground: Users write templates for an operator kernel to give hints and the rest are dealt with their compiler.
+    - [CUTLASS](https://docs.nvidia.com/cutlass/index.html) and [Triton](https://github.com/triton-lang/triton) are the popular choices.
+    - [FlashInfer](https://github.com/flashinfer-ai/flashinfer) and [FlexAttention](https://pytorch.org/blog/flexattention/) even provide templates specifically for attention.
+- There are many unresovled challenges in the world of AI compilers.
+  - Programming kernels even with template languages is becoming [increasingly complex with new hardware features](https://arxiv.org/html/2504.07004v1).
+  - [Post-Transformer models](https://arxiv.org/pdf/2312.00752) demands different kinds of graph optimizations and operator kernels.
+  - Mixed-precision and sparse computation are tightly coupled with AI compilers.
+  - There is a discussion on [writing LLM kernels using LLM agents](https://arxiv.org/pdf/2502.10517) (can a full circle be made?).
 
 ### Papers
 - [List of papers](https://github.com/merrymercy/awesome-tensor-compilers)
@@ -39,30 +45,34 @@ This repository is designed as a focused resource for individuals beginning work
 - FlashAttention series and PagedAttention are also recommended to understand the gist of kernel optimization for LLMs[[1](https://arxiv.org/pdf/2205.14135)][[2](https://arxiv.org/pdf/2307.08691)][[3](https://arxiv.org/pdf/2407.08608)][[decoding](https://arxiv.org/pdf/2311.01282)][[paged](https://arxiv.org/pdf/2309.06180)].
 
 ### Frameworks
-#### Graph compilers + Kernel libraries
+#### Graph compilers + Operator libraries
 - NVIDIA [TensorRT](https://github.com/NVIDIA/TensorRT) + [cuDNN](https://developer.nvidia.com/cudnn)
   - Core logics are closed-sourced.
 - Intel [OpenVino](https://github.com/openvinotoolkit/openvino) + [oneDNN](https://github.com/uxlfoundation/oneDNN)
 
-#### Graph & Kernel compilers
-- [TorchInductor](https://github.com/pytorch/pytorch/tree/main/torch/_inductor)
+#### Graph + Operator compilers
 - [TVM](https://github.com/apache/tvm)
 - [XLA](https://github.com/openxla/xla)
+- [TorchInductor](https://github.com/pytorch/pytorch/tree/main/torch/_inductor)
+  - TorchInductor feels like a "modern" version of traditional AI compilers, in the sense that it utilizes Triton for the part of operator compilation and has been getting some boost by the PyTorch team.
+  - For example, [vLLMs use TorchInductor to compile non-attention part of the LLMs](https://blog.vllm.ai/2025/08/20/torch-compile.html).
 
 #### LLM runtimes
 - [vLLM](https://github.com/vllm-project/vllm)
+- [SGLang](https://github.com/sgl-project/sglang)
 - NVIDIA [TensorRT-LLM](https://github.com/NVIDIA/TensorRT-LLM)
 
-#### Template-based kernel languages
+#### Template compilers
 - NVIDIA [CUTLASS](https://docs.nvidia.com/cutlass/index.html)
 - [Triton](https://github.com/triton-lang/triton)
   - [Gluon](https://github.com/triton-lang/triton/blob/main/python/tutorials/gluon/01-intro.py)
-    - For Hopper/Blackwell GPUs, Triton struggles to achieve optimal performance due to the increased complexity of GPU.
-    - To mitigate this, Gluon is being developed within the Triton ecosystem, which exposes more lower-level controls akin to CUTLASS.
+    - For Hopper/Blackwell GPUs Triton struggles to achieve optimal performance due to the increased complexity of GPU.
+    - Gluon is being developed within the Triton ecosystem which exposes more lower-level controls akin to CUTLASS.
   - [Helion](https://pytorch.org/blog/helion/)
-    - Helion, developed by PyTorch team, provides the middle ground between TorchInductor and Triton, offering flexbilty to program kernels with templates but hiding details of Triton
+    - Helion, developed by the PyTorch team, provides the middle ground between TorchInductor and Triton, offering flexbilty to program kernels with templates but hiding details of Triton.
+- [TileLang](https://github.com/tile-ai/tilelang) is another template-based language 
  
-#### Attention template languages
+#### Attention template compilers
 - [FlashInfer](https://github.com/flashinfer-ai/flashinfer)
 - [FlexAttention](https://pytorch.org/blog/flexattention/)
 
