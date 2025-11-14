@@ -54,7 +54,7 @@ This repository is designed as a focused resource for individuals beginning work
 - [TVM](https://github.com/apache/tvm)
 - [XLA](https://github.com/openxla/xla)
 - [TorchInductor](https://github.com/pytorch/pytorch/tree/main/torch/_inductor)
-  - TorchInductor feels like a "modern" version of traditional AI compilers, in the sense that it fits the PyTorch ecosystem and utilizes Triton for the part of operator compilation.
+  - TorchInductor feels like a "modern" version of traditional AI compilers, in the sense that it fits into the PyTorch ecosystem and utilizes Triton as the part of operator compilation.
   - For example, [vLLMs use TorchInductor to compile non-attention part of the LLMs](https://blog.vllm.ai/2025/08/20/torch-compile.html).
 
 #### LLM runtimes
@@ -66,16 +66,15 @@ This repository is designed as a focused resource for individuals beginning work
 - NVIDIA [CUTLASS](https://docs.nvidia.com/cutlass/index.html)
 - [Triton](https://github.com/triton-lang/triton)
   - [Gluon](https://github.com/triton-lang/triton/blob/main/python/tutorials/gluon/01-intro.py)
-    - For Hopper/Blackwell GPUs Triton struggles to achieve optimal performance due to the increased complexity of GPU.
-    - Gluon is being developed within the Triton ecosystem which exposes more lower-level controls akin to CUTLASS.
+    - Gluon is being developed within the Triton ecosystem to expose more controls to new hardware features.
   - [Helion](https://pytorch.org/blog/helion/)
-    - Helion, developed by the PyTorch team, provides the middle ground between TorchInductor and Triton, offering flexbilty to program kernels with templates but hiding details of Triton.
-- [TileLang](https://github.com/tile-ai/tilelang) is another template-based language built on top of TVM ecoysystem.
+    - Helion provides the middle ground between TorchInductor and Triton, providing a higher-level template programming.
+- [TileLang](https://github.com/tile-ai/tilelang) is an another template-based language built on top of the TVM ecoysystem.
  
 #### Attention template compilers
 - [FlashInfer](https://github.com/flashinfer-ai/flashinfer)
 - [FlexAttention](https://pytorch.org/blog/flexattention/)
-  - [FlashLight](https://arxiv.org/pdf/2511.02043) has been released very recently (Nov 07, 2025), which surpasses FlexAttention's performance with automatic compilation, being part of PyTorch workflow as the TorchInductor extension.
+  - [FlashLight](https://arxiv.org/pdf/2511.02043) 
 
 ### Hands-on tutorials
 - TVM
